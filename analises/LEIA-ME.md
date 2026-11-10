@@ -14,7 +14,13 @@ para rodar de novo é preciso ajustar os caminhos.
 | `v7_jogo.py` | Reproduz o modelo antigo (V7) para um jogo, a partir do legado |
 | `v7_tudo.py` | Mede as versões do modelo antigo no legado inteiro |
 | `ws_lote.py` | Lê as páginas salvas do WhoScored e casa as finalizações com as da Understat |
+| `ws_teste.py` | Primeiro piloto do efeito da marca de grande chance nos jogos do WhoScored |
 | `ws_pseudo.py` | Ensina o efeito da grande chance com o bruto da Understat e aplica nos jogos do WhoScored |
+| `ponta_a_ponta_1.py` | Três versões sem nenhuma entrada da Understat: só WhoScored, só FotMob, e mista |
+| `ponta_a_ponta_2.py` | As mesmas versões com o xG da Opta e o xGOT como entradas, treinando com a posição de cada fonte |
+| `legado_fotmob.py` | Mede o nível só FotMob no legado inteiro (7.592 time-jogos) |
+| `disseca.py` | Separa o erro conforme a grande chance concorda ou não com a Understat |
+| `jogada_anterior.py` | Mede o ganho da jogada anterior e da união de rebotes no legado inteiro |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.

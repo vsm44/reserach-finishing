@@ -87,6 +87,42 @@ Diretrizes do usuário registradas no dia:
 - Estilo de jogo é característica do clube; médias entre clubes diferentes escondem isso.
 - Um erro no xG de um time é também um erro no xGA do adversário.
 
+## Patamar medido e decisão (10/11/2026, fim do dia)
+
+Erro no xG de um time num jogo, contra o xG publicado pela Understat. O xG típico de um time é 1,3.
+
+| Nível | Erro médio | Metade dos casos até | Acima de 0,50 | Base |
+|---|---|---|---|---|
+| Só FotMob: posição, parte, lance, grande chance | 0,140 | 0,095 | 3,1% | 7.592 time-jogos |
+| + jogada anterior e união de rebotes (o que o WhoScored acrescenta) | 0,120 | 0,078 | 2,0% | 7.592 time-jogos |
+| Com o WhoScored de verdade, sem nada da Understat | 0,11 | 0,08 | 0 de 30 | 30 time-jogos |
+
+- No segundo nível a jogada anterior usada foi a da própria Understat, como substituta da do WhoScored;
+  a derivada do WhoScored coincide com ela em 84% das finalizações.
+- Na FotMob, a finalização que recebe a grande chance é escolhida pelo maior xG da Opta (ideia do
+  usuário). É melhor que a escolha por geometria e coincide com a marca do WhoScored em 45 de 53 casos.
+- O modelo aprende com a posição da própria fonte. Treinar com a posição da Understat e aplicar na da
+  FotMob criava desvio para cima.
+- O xG da Opta e o xGOT como entradas não reduziram o erro total. O xGOT acima de 0,98 identifica os
+  lances de gol desprotegido (Understat média 0,76), mas são 278 casos em 91 mil.
+- O WhoScored registra quem foi driblado antes da finalização, inclusive o goleiro (conferido em 2
+  lances, um deles revisto em vídeo pelo usuário).
+
+De onde vem o erro que sobra (legado, 91 mil finalizações):
+
+| Grupo | Parcela das finalizações | Parcela do erro |
+|---|---|---|
+| Nem grande chance, nem xG alto na Understat | 84,0% | 41,7% |
+| Grande chance e xG alto (concordam) | 13,3% | 33,2% |
+| Grande chance, mas xG baixo na Understat | 1,7% | 15,6% |
+| Sem grande chance, mas xG alto na Understat | 1,0% | 9,4% |
+
+Os dois grupos de desencontro são 2,7% das finalizações e um quarto do erro. Nenhuma fonte testada
+os explica.
+
+**Decisão do usuário:** o modelo antigo (V7) fica só como registro em `legado/`. O trabalho continua
+a partir do modelo novo, de poucas entradas, com análise conjunta dos lances.
+
 ## Hipóteses, verificações e ideias guardadas
 
 | | Descrição | Situação |
@@ -99,12 +135,13 @@ Diretrizes do usuário registradas no dia:
 | H6 | PPDA, gols e pontuação como perfil do clube | exploração inicial feita; a aprofundar |
 | V7 | Persistência do PPDA de um clube entre temporadas | a fazer |
 | H8 | Cabeçadas concentram divergência | a fazer |
-| V9 | Indício de goleiro batido nos dados (WhoScored tem a marca "um contra um") | a fazer |
+| V9 | Indício de goleiro batido nos dados | conferida: o WhoScored registra quem foi driblado |
 | H9 | As fontes usam informação sobre o goleiro que não publicam | a fazer |
-| H10 | xGOT extremo, perto de 1, como sinal de gol desprotegido | a fazer |
+| H10 | xGOT extremo, perto de 1, como sinal de gol desprotegido | confirmada nos lances; sem ganho no erro total |
+| H11 | Drible em defensor e drible no goleiro valem diferente na Understat | a medir com mais jogos |
 | V10 | StatsBomb aberta: 2015/16 completa em La Liga, Serie A, Premier League e Ligue 1 | conferida |
 | V11 | Fonte com grande chance por finalização | conferida: WhoScored |
-| I1 | Trava: limitar o desvio do nosso xG em relação ao da Opta | a testar |
+| I1 | Trava: limitar o desvio do nosso xG em relação ao da Opta | a testar; o xG da Opta já é usado para escolher a grande chance |
 | I2 | Revisão humana só das finalizações em que os sinais se contradizem | a testar |
 
 ## Em aberto
