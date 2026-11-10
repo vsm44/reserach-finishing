@@ -1,12 +1,52 @@
-# Modelo Finishing - Expected Goals
+# Modelo Finishing — Expected Goals
 
 ## O que é
+Projeto para medir o xG e o xGA de partidas já disputadas da forma como a Understat media, usando os
+dados de jogo da FotMob (dados Opta): finalizações, estatísticas dos times e dos jogadores, ataque e
+defesa.
 
-É um projeto para obter os dados de xG e xGA da Understat, usando os dados de finalizações ("chutes") da Footmob.
-
-- Why Understat: A Understat é uma fonte de dados importante para um projeto nosso, mas como é gratuita pode sair do ar. Também serviria para aplicar um modelo próprio em outras ligas que a Understat não cobre.
-- Why Footmob: Ela dá os dados de geolocalização, detalhes dos chutes e outros dados, mesmo defensivos, que permitem calibrar. A Undertat também dá, embora varie um pouco, mas se ela sair do ar, esses dados de geolocalização também saírão.
+## Por quê
+- A Understat era a base do nosso projeto de apostas e saiu do ar.
+- Um modelo próprio remove essa dependência e permite cobrir ligas que a Understat não cobria.
+- O modelo da Understat é o pioneiro, tido como mais simples e muito competente: aprendemos com ele primeiro.
 
 ## O que NÃO é
+Não é engenharia reversa para lançar um serviço. Serve só ao nosso projeto. A ideia é replicar
+primeiro e melhorar depois.
 
-Não é uma tentativa de engenharia reversa para simplesmente copiar a Understat e lançar algum tipo de serviço. É um modelo destinado a servir unicamente ao nosso projeto de apostas. A ideia é replicar e, a partir dai, melhorar para os nossos propósitos.
+## Vocabulário
+- **Finalização**, não "chute". Os modelos chamam tudo de chute (shot), mas o conjunto inclui
+  cabeceios e outras partes do corpo. Daí o nome do projeto.
+- **Rebote**: finalização que nasce de outra finalização na mesma jogada.
+- **Gol contra**: não é finalização de quem o marca.
+- **xGA** de um time num jogo é o xG do adversário nesse jogo. São duas medidas do mesmo jogo
+  (ataque de um, defesa do outro), e as duas precisam ser entendidas.
+
+## Como trabalhamos
+1. O bruto é a referência. Trabalho anterior é registro, não verdade.
+2. Sem inferência, presunção, aproximação ou correlação sem evidência. O que não se sabe se escreve
+   como "não sei".
+3. Regra fixa da fonte é descoberta e fixada como regra, não aproximada por estatística.
+4. Há julgamento humano na anotação das duas fontes. Diferenças são estudadas, não correlacionadas.
+5. Na dúvida, mesmo pequena, ou quando algo do futebol real não estiver claro, perguntar: o olho
+   humano muitas vezes resolve.
+6. Uma dúvida por vez, mensagens curtas. Dados e evidências sem conclusões, salvo quando pedidas.
+7. Nada é alterado, movido, deletado ou commitado sem lista do que é afetado e autorização.
+8. Primeiro acertar nos dados como um todo; a aplicação no projeto de apostas vem depois.
+
+## Dados
+- `data/understat/` — bruto da Understat, 5 ligas.
+- `data/fotmob/` — bruto da FotMob.
+- `legado/` — trabalho anterior, só para consulta.
+
+Papel de cada dado:
+- Posição das finalizações: a da FotMob/Opta.
+- xG, xGA e xGOT da própria Opta: comparação e referência. Dificilmente entrada.
+- deep, deep sofrido, buildup e afins da Understat: tese de que podem ser entrada, a testar.
+
+## Horizonte (secundário)
+Se a estratégia se provar no mercado, fora da amostra, evoluir para um modelo próprio de previsão.
+Não faz parte da fase atual.
+
+## Estado
+Ver PLANEJAMENTO.md.
