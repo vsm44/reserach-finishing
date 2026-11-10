@@ -33,6 +33,8 @@ primeiro e melhorar depois.
 6. Uma dúvida por vez, mensagens curtas. Dados e evidências sem conclusões, salvo quando pedidas.
 7. Nada é alterado, movido, deletado ou commitado sem lista do que é afetado e autorização.
 8. Primeiro acertar nos dados como um todo; a aplicação no projeto de apostas vem depois.
+9. Devagar, passo a passo. Se preciso, começar por um único jogo. Deixar passar algo importante
+   custa muito trabalho perdido lá na frente, e os créditos são limitados. Pressa só prejudica.
 
 ## Dados
 - `data/understat/` — bruto da Understat, 5 ligas.
