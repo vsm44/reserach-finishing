@@ -175,7 +175,10 @@ desvio. O V7 antigo, na mesma régua: 0,127 e 2,3%. Com a jogada anterior e os r
 
 **Em aberto**
 
-- Se o palpite do usuário aproxima o modelo da Understat: proposto um teste cego com 20 gols.
+- Se o palpite do usuário aproxima o modelo da Understat: teste cego em andamento. Os 20 gols estão em
+  `relatorios/teste_palpites_20_gols.xlsx` (sorteados entre 184 gols de grande chance da La Liga, de
+  01/03 a 24/05/2026, sem nenhum valor de xG). A chave para casar com as fontes está em
+  `relatorios/teste_palpites_chave.csv`.
 - xG da Understat da rodada 4 da Serie A, para fechar o teste cego do nível WhoScored.
 - Montar a ferramenta de uso: baixar, calcular xG e xGA por time, e listar os lances a conferir.
 - Por que a La Liga 2026/27 tem erro maior que a Serie A da mesma temporada.

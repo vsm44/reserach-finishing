@@ -30,6 +30,7 @@ para rodar de novo é preciso ajustar os caminhos.
 | `retreina.py` | Pareia a La Liga 2025/26, retreina de várias formas e testa de novo |
 | `cego.py` | Teste cego na Serie A 2026/27, níveis WhoScored e só FotMob |
 | `cego_r1.py` | Teste cego da rodada 1 da Serie A, nível só FotMob |
+| `sorteia_gols.py` | Sorteia os 20 gols do teste cego dos palpites e gera a planilha |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.
