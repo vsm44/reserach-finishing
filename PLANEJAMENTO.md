@@ -123,6 +123,63 @@ os explica.
 **Decisão do usuário:** o modelo antigo (V7) fica só como registro em `legado/`. O trabalho continua
 a partir do modelo novo, de poucas entradas, com análise conjunta dos lances.
 
+## Achados de 11/11/2026
+
+**Coleta.** A FotMob continua publicando, e as páginas públicas trazem os dados completos de cada
+jogo. `scripts/baixa_fotmob.py` baixa os jogos encerrados de uma liga (testado: La Liga, 119 jogos;
+Serie A, 110 jogos, temporada 2026/27). O acesso automático ao WhoScored segue recusado; as páginas
+são salvas à mão.
+
+**Modelo só FotMob, sete entradas:** posição (duas coordenadas), parte do corpo, tipo de lance,
+grande chance escolhida pelo xG da Opta, se foi gol, e rebote do mesmo minuto; os totais unem os
+rebotes. No legado (7.592 time-jogos): erro médio 0,135, mediano 0,091, 2,5% acima de 0,50, sem
+desvio. O V7 antigo, na mesma régua: 0,127 e 2,3%. Com a jogada anterior e os rebotes ligados
+(o que o WhoScored acrescenta): 0,120 e 2,0%.
+
+**Testes em jogos nunca vistos**
+
+| Teste | Time-jogos | Erro médio | Mediano | Acima de 0,50 |
+|---|---|---|---|---|
+| Serie A 2026/27, rodadas 1 a 3, cego, só FotMob | 60 | 0,148 | 0,095 | 2 |
+| Serie A 2026/27, rodadas 2 e 3, cego, WhoScored | 40 | 0,141 | 0,098 | 2 |
+| La Liga 2025/26 inteira, só FotMob | 760 | 0,160 | 0,112 | 3,8% |
+| La Liga 2026/27, 78 jogos, só FotMob | 156 | 0,188 | 0,107 | 9,0% |
+
+- Nos testes cegos, as previsões foram publicadas antes de o usuário revelar o xG da Understat.
+- Usar o xG da Opta diretamente erra o dobro (0,28 a 0,29) e quase sempre para menos.
+- Na La Liga 2026/27 o erro foi maior, e retreinar com 2025/26 não mudou isso. Uma linha da planilha
+  (Villarreal × Deportivo, 05/09/2026: 3,64 e 2,44) está três vezes acima da Opta nos dois times e não
+  bate com a avaliação do usuário sobre os gols; sem ela, o erro médio é 0,174. Causa não identificada.
+- A temporada 2026/27 da La Liga tem 1,55 gol por time, a maior desde 2015.
+
+**Onde o erro se concentra**
+
+- O erro absoluto cresce com o xG do time: 0,08 até 1,0 e 0,23 acima de 2,2. Em proporção, cai de
+  20% para 8%.
+- Nos jogos altos o erro não tem direção: o modelo acerta a média e erra para os dois lados. Ajuste
+  de escala não melhora.
+- Jogos equilibrados têm o menor erro, mas quando a diferença real entre os times é menor que 0,3 o
+  modelo aponta o time errado como superior em 20% a 40% dos casos.
+- Seleção para conferência manual: rever os times em que o modelo dá mais de 2,0 ou que tiveram 4 ou
+  mais grandes chances são cerca de 5 times e 18 lances por rodada de 10 jogos, com 73% dos erros
+  acima de 0,50.
+
+**Lances revistos em vídeo pelo usuário**
+
+- Griezmann (Atlético × Betis, 18/05/2025): bicicleta contada pela FotMob como grande chance;
+  a Understat deu 0,142 e estava mais perto do que aconteceu.
+- Gueye (Villarreal × Sevilla, 25/05/2025): ângulo fechado e marcado; a Understat deu 0,519 e a Opta
+  0,197, mais perto da avaliação do usuário.
+- Gols de Villarreal × Deportivo (05/09/2026): avaliação do usuário próxima da Opta e do modelo.
+- Nos desencontros entre as fontes, nenhuma está sempre mais perto do que o usuário vê.
+
+**Em aberto**
+
+- Se o palpite do usuário aproxima o modelo da Understat: proposto um teste cego com 20 gols.
+- xG da Understat da rodada 4 da Serie A, para fechar o teste cego do nível WhoScored.
+- Montar a ferramenta de uso: baixar, calcular xG e xGA por time, e listar os lances a conferir.
+- Por que a La Liga 2026/27 tem erro maior que a Serie A da mesma temporada.
+
 ## Hipóteses, verificações e ideias guardadas
 
 | | Descrição | Situação |
@@ -139,6 +196,8 @@ a partir do modelo novo, de poucas entradas, com análise conjunta dos lances.
 | H9 | As fontes usam informação sobre o goleiro que não publicam | a fazer |
 | H10 | xGOT extremo, perto de 1, como sinal de gol desprotegido | confirmada nos lances; sem ganho no erro total |
 | H11 | Drible em defensor e drible no goleiro valem diferente na Understat | a medir com mais jogos |
+| H12 | Técnica da finalização (voleio, bicicleta) reduz o xG da Understat | sem apoio em 18 jogos; amostra pequena |
+| H13 | A Understat ajusta o xG pelo pé dominante | não confirmada (40 mil finalizações de pé ruim) |
 | V10 | StatsBomb aberta: 2015/16 completa em La Liga, Serie A, Premier League e Ligue 1 | conferida |
 | V11 | Fonte com grande chance por finalização | conferida: WhoScored |
 | I1 | Trava: limitar o desvio do nosso xG em relação ao da Opta | a testar; o xG da Opta já é usado para escolher a grande chance |
