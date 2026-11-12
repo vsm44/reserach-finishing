@@ -179,9 +179,50 @@ desvio. O V7 antigo, na mesma régua: 0,127 e 2,3%. Com a jogada anterior e os r
   `relatorios/teste_palpites_20_gols.xlsx` (sorteados entre 184 gols de grande chance da La Liga, de
   01/03 a 24/05/2026, sem nenhum valor de xG). A chave para casar com as fontes está em
   `relatorios/teste_palpites_chave.csv`.
-- xG da Understat da rodada 4 da Serie A, para fechar o teste cego do nível WhoScored.
-- Montar a ferramenta de uso: baixar, calcular xG e xGA por time, e listar os lances a conferir.
+- (Feito em 12/11) xG da Understat da rodada 4 da Serie A, para fechar o teste cego do nível WhoScored.
+- Ferramenta de uso: baixar e calcular xG e xGA por time já existem em `scripts/` (12/11). Falta a
+  lista dos lances a conferir por rodada.
 - Por que a La Liga 2026/27 tem erro maior que a Serie A da mesma temporada.
+
+## Teste final na temporada 2026/27 (12/11/2026)
+
+O modelo só FotMob foi rodado em todos os jogos encerrados de 2026/27 da La Liga, da Serie A e da
+Ligue 1, e as previsões foram gravadas antes de abrir os valores da Understat (arquivos em
+`relatorios/previsoes_2026-27/`). Os valores da Understat estão em `data/understat/`.
+
+| Liga e jogos | Time-jogos | Erro médio | Mediano | Acima de 0,50 | Desvio | Cego? |
+|---|---|---|---|---|---|---|
+| Serie A, rodadas 1 a 3 | 60 | 0,148 | 0,095 | 3,3% | 0,000 | sim (11/11) |
+| Serie A, rodadas 4 a 6 | 60 | 0,207 | 0,163 | 5,0% | −0,044 | sim (12/11) |
+| La Liga, 78 jogos | 156 | 0,193 | 0,110 | 8,3% | −0,042 | não |
+| Ligue 1, 53 jogos | 106 | 0,211 | 0,158 | 6,6% | +0,081 | não |
+
+- xG da Opta usado direto, nos mesmos jogos: 0,313 (Serie A), 0,284 (La Liga), 0,248 (Ligue 1).
+- Nível WhoScored, nos 30 jogos da Serie A com página salva: 0,165, igual ao só FotMob (0,165);
+  a média dos dois níveis deu 0,149. Na rodada 4, cega para esse nível: 0,212 contra 0,216.
+- **O erro cresce a cada temporada:** 0,135 a 0,140 no legado (2020 a 2024), 0,160 em 2025/26 e
+  cerca de 0,19 em 2026/27. Causa não identificada; investigar exigiria as finalizações da Understat
+  de 2026/27, e só há totais por time.
+- A Ligue 1, que o modelo nunca viu no treino, teve o pior resultado e um desvio para cima.
+- A Understat às vezes entrega o xG sem o ponto decimal (ex.: `1031` em vez de 1,031). Regra: xG de
+  time acima de 8 é lido com três casas decimais e avisado. O bruto do repositório não tem nenhum caso.
+- Na La Liga os valores usados foram os da planilha de 11/11; `la_liga_teste.csv` e
+  `la_liga_understat.csv` vieram sem xG e são idênticos entre si.
+
+**Modelo guardado para uso**
+
+- `scripts/modelo_fotmob.py`: o modelo (leitura do jogo, grande chance, união de rebotes, total por time).
+- `data/treino/treino_fotmob_2020-2025.csv.gz`: as 100.383 finalizações usadas no treino.
+- `scripts/treina_modelo.py`: treina a partir dessa tabela e grava `scripts/modelo_fotmob.pkl`.
+- `scripts/roda_modelo.py`: roda o modelo numa pasta de jogos baixada por `scripts/baixa_fotmob.py`.
+- Conferido: treinando a partir do repositório, as previsões da La Liga e da Serie A saem idênticas
+  às que foram fixadas.
+
+**Sugestões do usuário ainda não testadas**
+
+- Usar outras métricas da Opta e a força acumulada do time (xGD) como entradas.
+- Treinar com as temporadas de 2015 a 2018 da Premier League, Bundesliga e Ligue 1, que estão no
+  computador do usuário e não no repositório.
 
 ## Hipóteses, verificações e ideias guardadas
 

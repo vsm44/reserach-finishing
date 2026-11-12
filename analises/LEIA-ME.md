@@ -31,6 +31,10 @@ para rodar de novo é preciso ajustar os caminhos.
 | `cego.py` | Teste cego na Serie A 2026/27, níveis WhoScored e só FotMob |
 | `cego_r1.py` | Teste cego da rodada 1 da Serie A, nível só FotMob |
 | `sorteia_gols.py` | Sorteia os 20 gols do teste cego dos palpites e gera a planilha |
+| `treina_final.py` | Treino do modelo final na pasta de trabalho (a versão de uso é `scripts/treina_modelo.py`) |
+| `roda_liga.py` | Roda o modelo numa pasta de jogos (a versão de uso é `scripts/roda_modelo.py`) |
+| `casa_prev.py` | Casa as linhas de um arquivo de jogos com as previsões, só por data e nomes dos times |
+| `compara.py` | Compara as previsões gravadas com um arquivo de xG da Understat |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.
