@@ -250,8 +250,8 @@ o que gera aposta ruim. O erro médio é secundário. Saber qual time foi superi
 - **xG da Opta misturado ao modelo:** não melhora.
 - **Treinar com mais ligas e temporadas** (piloto: Ligue 1 2024/25 e 2025/26, Serie A 2025/26; 989
   jogos, 24 mil finalizações): os erros graves em 2026/27 ficam entre 6,3% e 6,8%, contra 6,5% da
-  base. Treinar só com temporadas recentes piora. Os dados do piloto estão em  e
-  , mas não entraram no modelo de uso.
+  base. Treinar só com temporadas recentes piora. Os dados do piloto estão em `data/fotmob/` e
+  `data/treino/treino_fotmob_piloto_ligue1_seriea.csv.gz`, mas não entraram no modelo de uso.
 - **Pênalti:** já tratado (valor fixo; pênaltis descontados das grandes chances antes de distribuí-las).
 
 **Caminhos de pé**
