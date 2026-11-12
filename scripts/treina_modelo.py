@@ -13,7 +13,10 @@ import modelo_fotmob as M
 
 tabela = pd.read_csv(os.path.join(AQUI, "..", "data", "treino", "treino_fotmob_2020-2025.csv.gz"), float_precision="round_trip")
 mod = M.treina(tabela)
+# segunda etapa: tabela por time-jogo, com o total da primeira etapa calculado fora da amostra
+tabela2 = pd.read_csv(os.path.join(AQUI, "..", "data", "treino", "treino_etapa2.csv.gz"), float_precision="round_trip")
+mod["etapa2"] = M.treina2(tabela2)
 saida = sys.argv[1] if len(sys.argv) > 1 else os.path.join(AQUI, "modelo_fotmob.pkl")
 with open(saida, "wb") as f:
     pickle.dump(mod, f)
-print(f"treinado com {len(tabela)} finalizações; gravado em {saida}")
+print(f"primeira etapa: {len(tabela)} finalizações; segunda etapa: {len(tabela2)} time-jogos; gravado em {saida}")

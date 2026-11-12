@@ -36,6 +36,8 @@ para rodar de novo é preciso ajustar os caminhos.
 | `casa_prev.py` | Casa as linhas de um arquivo de jogos com as previsões, só por data e nomes dos times |
 | `compara.py` | Compara as previsões gravadas com um arquivo de xG da Understat |
 | `amplia_treino.py` | Pareia temporadas novas, retreina com mais ligas e mede em 2026/27 (piloto de 12/11) |
+| `etapa2.py` | Segunda etapa: corrige o total do time com dados do jogo; treina no histórico e mede em 2026/27 |
+| `v7_vs_novo.py` | Compara o V7, a primeira etapa e a segunda etapa nos mesmos jogos da La Liga |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.

@@ -260,6 +260,44 @@ o que gera aposta ruim. O erro médio é secundário. Saber qual time foi superi
 - Avaliação do usuário nas grandes chances: teste cego dos 20 gols, pendente.
 - Não testado: outras estatísticas do jogo da FotMob e força acumulada do time (xGD) como entradas.
 
+## Segunda etapa incorporada ao modelo de uso (12/11/2026)
+
+Ideia do usuário: corrigir "na força" o total do time pelo número de gols e pelo gap. Virou um segundo
+modelo, que recebe o total da primeira etapa e o corrige com gols, total do adversário, contagens das
+finalizações e o xG da Opta por time (22 entradas, em `COLS2` de `scripts/modelo_fotmob.py`).
+
+- Treino: 5.778 time-jogos (La Liga 2021 a 2025, Serie A 2025/26, Ligue 1 2024 a 2026), com o total
+  da primeira etapa sempre calculado fora da amostra. Tabela em `data/treino/treino_etapa2.csv.gz`.
+- `scripts/treina_modelo.py` treina as duas etapas; `scripts/roda_modelo.py` já entrega o xG final
+  (`xg_m`, `xg_v`) e o da primeira etapa (`xg1_m`, `xg1_v`).
+
+| Erros acima de 0,50 | Primeira etapa | Com a segunda etapa |
+|---|---|---|
+| Histórico, validação cruzada (5.778) | 3,1% | 2,6% |
+| 2026/27 (382) | 6,5% (25) | 4,7% (18) |
+| 2026/27, times com modelo acima de 2,0 | 14,8% | cerca de 10% |
+| 2026/27, erros acima de 0,70 | 2,9% | 1,3% |
+
+Por liga em 2026/27: La Liga de 8,3% para 5,1%; Ligue 1 de 6,6% para 4,7%; Serie A fica em 4,2%.
+
+**Comparação com o V7 nos mesmos jogos** (La Liga 2021/22 a 2024/25, 3.039 time-jogos, todos fora
+da amostra de cada modelo):
+
+| Modelo | Acima de 0,50 | Acima de 0,70 | Acima de 0,30 |
+|---|---|---|---|
+| V7 antigo | 1,94% (59) | 0,72% | 9,0% |
+| Novo, primeira etapa | 2,24% (68) | 0,63% | 10,4% |
+| Novo, com a segunda etapa | 1,81% (55) | 0,46% | 8,0% |
+
+Igual ou melhor que o V7 em todas as medidas; a vantagem em erros acima de 0,50 é de 4 casos e cabe
+no acaso, a dos erros acima de 0,70 é mais nítida.
+
+O que a correção aprendeu: times que cruzam muito ficavam acima da Understat; pesam também os gols
+dos dois lados, o xG de bola rolando da Opta e os cortes da defesa adversária. Dos indicadores da
+Understat, a sobra acompanha um pouco o "deep" (0,15) e nada o PPDA.
+
+Ressalvas: em 2026/27 a diferença é de 7 casos em 382; não testada fora de La Liga, Serie A e Ligue 1.
+
 ## Hipóteses, verificações e ideias guardadas
 
 | | Descrição | Situação |

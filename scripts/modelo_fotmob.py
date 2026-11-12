@@ -4,6 +4,9 @@ Entradas por finalização: posição (X, Y), parte do corpo, tipo de lance, gra
 (escolhida pelo maior xG da Opta entre as finalizações do jogador ou do time) e se foi gol.
 O total do time une as finalizações do mesmo minuto quando a anterior foi defendida,
 bloqueada ou bateu na trave (rebote). Pênalti vale o número fixo da liga.
+
+Segunda etapa: o total de cada time é corrigido com dados do jogo inteiro (gols, total do
+adversário, contagens das finalizações e xG da Opta por time).
 """
 import gzip, json, pickle, warnings
 import numpy as np, pandas as pd
@@ -108,17 +111,58 @@ def total(g):
     return float(g.groupby((~reb).cumsum()).p.apply(lambda v: 1 - np.prod(1 - v.values)).sum())
 
 
+COLS2 = ["m", "m_adv", "soma", "n_fin", "n_big", "p_big", "p_max", "n_cab", "n_alvo", "n_bloq", "n_pen", "opta_fin", "xgot_fin",
+         "mandante", "gols", "gols_adv", "f_expected_goals", "f_expected_goals_open_play", "f_expected_goals_set_play",
+         "f_expected_goals_non_penalty", "f_expected_goals_on_target", "a_expected_goals"]
+
+
+def linhas_time(d, s):
+    """Dados de cada time no jogo para a segunda etapa: [mandante, visitante]."""
+    h = d["header"]["teams"]
+    st = estatisticas(d)
+    out = []
+    for i, lado in enumerate(("h", "a")):
+        t, o = (s[s.lado == lado], s[s.lado != lado]) if len(s) else (s, s)
+        r = dict(m=total(t), m_adv=total(o), soma=float(t.p.sum()) if len(t) else 0.0, n_fin=len(t),
+                 n_big=int(t.big.sum()) if len(t) else 0, p_big=float(t[t.big == 1].p.sum()) if len(t) else 0.0,
+                 p_max=float(t.p.max()) if len(t) else 0.0, n_cab=int((t.parte == "Header").sum()) if len(t) else 0,
+                 n_alvo=int(t.alvo.sum()) if len(t) else 0, n_bloq=int(t.bloq.sum()) if len(t) else 0,
+                 n_pen=int((t.lance == "Penalty").sum()) if len(t) else 0, opta_fin=float(t.xg_opta.sum()) if len(t) else 0.0,
+                 xgot_fin=float(t.xgot.fillna(0).sum()) if len(t) else 0.0, mandante=int(i == 0),
+                 gols=float(h[i].get("score") or 0), gols_adv=float(h[1 - i].get("score") or 0))
+        for k, v in st[i].items():
+            r["f_" + k] = v
+        for k, v in st[1 - i].items():
+            r["a_" + k] = v
+        out.append(r)
+    return out
+
+
+def treina2(tabela):
+    """Segunda etapa: aprende a diferença entre o xG da Understat e o total da primeira etapa."""
+    from sklearn.ensemble import HistGradientBoostingRegressor
+    m = HistGradientBoostingRegressor(max_iter=250, learning_rate=0.04, max_leaf_nodes=6, min_samples_leaf=40,
+                                      l2_regularization=2.0, early_stopping=False, random_state=0)
+    m.fit(tabela[COLS2], tabela.u - tabela.m)
+    return m
+
+
 def jogo(mod, d, liga):
-    """Linha-resumo de um jogo: xG do mandante e do visitante pelo modelo, e o da Opta."""
+    """Linha-resumo de um jogo. xg_m e xg_v: xG final do mandante e do visitante (com a segunda etapa,
+    se o modelo a tiver). xg1_m e xg1_v: total da primeira etapa. opta_m e opta_v: xG publicado pela Opta."""
     h = d["header"]["teams"]
     s = preve(mod, finalizacoes(d), liga)
-    st = estatisticas(d)
+    lt = linhas_time(d, s)
+    x1 = [lt[0]["m"], lt[1]["m"]]
+    if mod.get("etapa2") is not None:
+        aj = mod["etapa2"].predict(pd.DataFrame(lt).reindex(columns=COLS2))
+        xf = [max(float(x1[i] + aj[i]), 0.0) for i in (0, 1)]
+    else:
+        xf = x1
     return dict(id=d["general"]["matchId"], data=d["general"]["matchTimeUTCDate"][:10], mandante=h[0]["name"], visitante=h[1]["name"],
-                gols_m=h[0].get("score"), gols_v=h[1].get("score"),
-                xg_m=total(s[s.lado == "h"]) if len(s) else 0.0, xg_v=total(s[s.lado == "a"]) if len(s) else 0.0,
-                opta_m=st[0].get("expected_goals", np.nan), opta_v=st[1].get("expected_goals", np.nan),
-                fin_m=int((s.lado == "h").sum()) if len(s) else 0, fin_v=int((s.lado == "a").sum()) if len(s) else 0,
-                gc_m=int(s[s.lado == "h"].big.sum()) if len(s) else 0, gc_v=int(s[s.lado == "a"].big.sum()) if len(s) else 0), s
+                gols_m=h[0].get("score"), gols_v=h[1].get("score"), xg_m=xf[0], xg_v=xf[1], xg1_m=x1[0], xg1_v=x1[1],
+                opta_m=lt[0].get("f_expected_goals", np.nan), opta_v=lt[1].get("f_expected_goals", np.nan),
+                fin_m=lt[0]["n_fin"], fin_v=lt[1]["n_fin"], gc_m=lt[0]["n_big"], gc_v=lt[1]["n_big"]), s
 
 
 def le(caminho):

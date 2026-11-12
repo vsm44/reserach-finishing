@@ -8,7 +8,8 @@ Exemplo, depois de baixar a rodada:
   python3 scripts/baixa_fotmob.py fotmob/la_liga/2026
   python3 scripts/roda_modelo.py fotmob/la_liga/2026 La_liga la_liga_2026.csv
 
-No arquivo de saída, xg_m e xg_v são o xG do mandante e do visitante; o xGA de um é o xG do outro.
+No arquivo de saída, xg_m e xg_v são o xG final do mandante e do visitante (já com a segunda etapa);
+o xGA de um é o xG do outro. xg1_m e xg1_v são o total da primeira etapa, e opta_m e opta_v o xG da Opta.
 """
 import glob, os, pickle, sys
 import pandas as pd
