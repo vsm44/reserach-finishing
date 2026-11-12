@@ -224,6 +224,42 @@ Ligue 1, e as previsões foram gravadas antes de abrir os valores da Understat (
 - Treinar com as temporadas de 2015 a 2018 da Premier League, Bundesliga e Ligue 1, que estão no
   computador do usuário e não no repositório.
 
+## Régua e caminhos fechados (12/11/2026)
+
+**Régua definida pelo usuário:** o que importa é o erro grave (acima de 0,50 no xG de um time), que é
+o que gera aposta ruim. O erro médio é secundário. Saber qual time foi superior não é o problema.
+
+**Onde os erros graves acontecem** (pelo xG que o modelo dá ao time)
+
+| xG do modelo | Legado | 2026/27 |
+|---|---|---|
+| até 1,0 | 0,4% | 0 em 100 |
+| 1,0 a 2,0 | 2,2% | 4,8% |
+| acima de 2,0 | 9,4% | 14,8% |
+| Total | 3,1% | 6,5% (25 em 382) |
+
+- Com poucos gols o modelo é muito melhor: jogo sem gols tem 1,3% de erros graves; com 5 ou mais, 5,7%.
+- A temporada 2026/27 tem média de gols alta (hipótese do usuário para a piora). Aplicando as taxas do
+  legado à distribuição de jogos de 2026/27, os erros graves iriam de 3,1% para 3,9%; o observado é
+  6,5%. A média de gols explica cerca de um quarto da piora.
+- Nos jogos altos o erro não tem direção; ajuste de escala não corrige.
+
+**Caminhos testados e fechados**
+
+- **xGOT da Opta** (direto ou misturado ao modelo): piora em todas as faixas, mais ainda nos jogos altos.
+- **xG da Opta misturado ao modelo:** não melhora.
+- **Treinar com mais ligas e temporadas** (piloto: Ligue 1 2024/25 e 2025/26, Serie A 2025/26; 989
+  jogos, 24 mil finalizações): os erros graves em 2026/27 ficam entre 6,3% e 6,8%, contra 6,5% da
+  base. Treinar só com temporadas recentes piora. Os dados do piloto estão em  e
+  , mas não entraram no modelo de uso.
+- **Pênalti:** já tratado (valor fixo; pênaltis descontados das grandes chances antes de distribuí-las).
+
+**Caminhos de pé**
+
+- Média do nível WhoScored com o só FotMob (0,149 contra 0,165 em 60 time-jogos; amostra pequena).
+- Avaliação do usuário nas grandes chances: teste cego dos 20 gols, pendente.
+- Não testado: outras estatísticas do jogo da FotMob e força acumulada do time (xGD) como entradas.
+
 ## Hipóteses, verificações e ideias guardadas
 
 | | Descrição | Situação |

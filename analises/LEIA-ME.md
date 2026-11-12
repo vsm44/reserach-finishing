@@ -35,6 +35,7 @@ para rodar de novo é preciso ajustar os caminhos.
 | `roda_liga.py` | Roda o modelo numa pasta de jogos (a versão de uso é `scripts/roda_modelo.py`) |
 | `casa_prev.py` | Casa as linhas de um arquivo de jogos com as previsões, só por data e nomes dos times |
 | `compara.py` | Compara as previsões gravadas com um arquivo de xG da Understat |
+| `amplia_treino.py` | Pareia temporadas novas, retreina com mais ligas e mede em 2026/27 (piloto de 12/11) |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.
