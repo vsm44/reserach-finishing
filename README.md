@@ -51,4 +51,4 @@ Se a estratégia se provar no mercado, fora da amostra, evoluir para um modelo p
 Não faz parte da fase atual.
 
 ## Estado
-Ver PLANEJAMENTO.md.
+O estado atual, resumido, está em CLAUDE.md. O histórico detalhado está em PLANEJAMENTO.md.
