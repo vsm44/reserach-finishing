@@ -1,6 +1,6 @@
 # Modelo Finishing — leia isto primeiro
 
-Atualizado em 12/11/2026. O histórico detalhado, em ordem cronológica, está em PLANEJAMENTO.md.
+Atualizado em 13/11/2026. O histórico detalhado, em ordem cronológica, está em PLANEJAMENTO.md.
 
 ## O que é
 Reproduzir o xG e o xGA por time que a Understat publicava, usando dados que ainda existem
@@ -59,6 +59,7 @@ na FotMob, para o download: 87, 55, 53, 47, 54.
 | `data/understat/` | bruto de 5 ligas (até 2025/26) e planilhas de 2026/27 (total por time) |
 | `data/fotmob/` | jogos por liga e temporada |
 | `data/whoscored/` | páginas salvas à mão (48 jogos) |
+| `data/football_manager/` | fichas do FMInside de 6 times, edições 21 a 27 (bruto e planilha) |
 | `data/treino/` | tabelas de treino das duas etapas |
 | `analises/` | scripts de cada teste, descritos em `analises/LEIA-ME.md` |
 | `relatorios/` | previsões fixadas antes de ver o gabarito, PDFs, planilha dos 20 gols |
@@ -71,10 +72,16 @@ na FotMob, para o download: 87, 55, 53, 47, 54.
 - Pé dominante: a Understat não ajusta por ele. Técnica (voleio): sem apoio.
 - Histórico dos times e dos jogadores, força de escalação: ganho mínimo.
 - Posição dos defensores (StatsBomb): ajuda 17%, mas não existe para jogos atuais.
+- Notas do Football Manager (finalizador, goleiro, zagueiros; nota geral e atributos-chave), em
+  1.900 jogos de 5 temporadas: erros graves 96 sem as notas, 95 a 97 com elas. Por finalização, nada muda.
 
 ## Fatos sobre os dados
 - Understat: pênalti tem valor por liga (0,7433 a 0,7613); o xG do time une os rebotes por
   1 − (1−a)(1−b); gol contra vale 0; às vezes o xG vem sem o ponto decimal (1031 = 1,031).
+- Em Milan, Inter, Juventus, Atlético, Barcelona e Real Madrid, a primeira etapa fica em média 0,06
+  abaixo da Understat quando eles atacam e 0,03 acima quando defendem; nos outros times, zero.
+  A segunda etapa tira cerca de três quartos desse desvio. Erro grave com eles atacando: 4,7%
+  (16 de 342) com a segunda etapa, para os dois lados. Não medido: se vale para todo time forte.
 - FotMob: as páginas públicas trazem os dados completos. Não tem mapa antes de 2020/21.
 - WhoScored: tem grande chance por finalização e a jogada anterior, mas recusa acesso
   automático. Páginas salvas à mão (Ctrl+S "somente HTML", ou SingleFile sem remover scripts).

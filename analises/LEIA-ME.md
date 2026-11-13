@@ -38,6 +38,10 @@ para rodar de novo é preciso ajustar os caminhos.
 | `amplia_treino.py` | Pareia temporadas novas, retreina com mais ligas e mede em 2026/27 (piloto de 12/11) |
 | `etapa2.py` | Segunda etapa: corrige o total do time com dados do jogo; treina no histórico e mede em 2026/27 |
 | `v7_vs_novo.py` | Compara o V7, a primeira etapa e a segunda etapa nos mesmos jogos da La Liga |
+| `fm_le_bruto.py` | Lê o bruto do FMInside (fichas do Football Manager) e monta a tabela única de jogadores |
+| `fm_monta.py` | Junta as notas do Football Manager (finalizador, goleiro, zagueiros) às finalizações de 5 temporadas |
+| `fm_teste.py` | Primeira etapa com e sem as notas do Football Manager, validação cruzada por jogo (13/11) |
+| `fm_etapa2.py` | Desvio nos seis times de elite antes e depois da segunda etapa |
 
 Fontes externas usadas e não guardadas aqui: conjunto aberto da StatsBomb
 (github.com/statsbomb/open-data), La Liga 2015/16.
