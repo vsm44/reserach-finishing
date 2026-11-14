@@ -1,18 +1,18 @@
+Atualizado em 14/11/2026
+
 # Modelo Finishing — Expected Goals
 
 ## O que é
-Projeto para medir o xG e o xGA de partidas já disputadas da forma como a Understat media, usando os
-dados de jogo da FotMob (dados Opta): finalizações, estatísticas dos times e dos jogadores, ataque e
-defesa.
+Projeto para medir o xG e o xGA de partidas já disputadas da forma como a Understat mede (ou media, caso não volte), usando os dados de fontes como Fotmob/Opta, WhoScored, FM-INSIDE e outros que se mostrarem necessários. A ideia é entender as diferenças que dos modelos de fontes de dados tidas como mais modernas e, aplicando informações de outras fontes de dados, emular o número de xG/XGA que a Understat daria para um jogo.
+
 
 ## Por quê
-- A Understat era a base do nosso projeto de apostas e saiu do ar.
-- Um modelo próprio remove essa dependência e permite cobrir ligas que a Understat não cobria.
-- O modelo da Understat é o pioneiro, tido como mais simples e muito competente: aprendemos com ele primeiro.
+- A Understat é a fonte de dados principal para um projeto de apostas do proprietário do repositório.
+- Um modelo próprio remove essa dependência e permite cobrir ligas que a Understat não cobre.
+- O modelo da Understat é pioneiro, mais simples e funciona para o nosso propósito.
 
 ## O que NÃO é
-Não é engenharia reversa para lançar um serviço. Serve só ao nosso projeto. A ideia é replicar
-primeiro e melhorar depois.
+Não é engenharia reversa para lançar um serviço. Serve só ao nosso projeto. 
 
 ## Vocabulário
 - **Finalização**, não "chute". Os modelos chamam tudo de chute (shot), mas o conjunto inclui
